@@ -40,7 +40,7 @@ class Login:
             conn = db_con.open()
             if conn is None:
                 raise Exception("No se pudo conectar a la base de datos")
-            cursor = conn.cursor()
+            cursor = conn.cursor(buffered=True)
             cursor.execute("SELECT * FROM usuarios WHERE username=%s AND password=%s", (username, password))
             row = cursor.fetchone()
             db_con.close()
@@ -212,7 +212,8 @@ class UserCRUD:
             nuevo_id = (max_id + 1) if max_id else 1
             self.txId.insert(0, nuevo_id)
             db_con.close()
-        except mysql.connector.Error as err:messagebox.showerror("Error", f"Error al conectar con la base de datos: {err}")
+        except mysql.connector.Error as err:
+            messagebox.showerror("Error", f"Error al conectar con la base de datos: {err}")
 
         self.btSalvar.config(state=tk.NORMAL)
         self.btCancelar.config(state=tk.NORMAL)
@@ -228,6 +229,25 @@ class UserCRUD:
             cursor.execute("SELECT * FROM usuarios WHERE usuario_id=%s", (id_usuario,))
             usuario = cursor.fetchone()
             db_con.close()
+
+            if usuario:
+                self.txId.delete(0, tk.END)
+                self.txId.insert(0, usuario[0])
+                self.txNombre.delete(0, tk.END)
+                self.txNombre.insert(0, usuario[1])
+                self.txUsername.delete(0, tk.END)
+                self.txUsername.insert(0, usuario[2])
+                self.txPassword.delete(0, tk.END)
+                self.txPassword.insert(0, usuario[3])
+                self.txPerfil.set(usuario[4])
+
+                self.btEditar.config(state=tk.NORMAL)
+                self.btCancelar.config(state=tk.NORMAL)
+            else:
+                messagebox.showerror("Error", "Usuario no encontrado")
+        except mysql.connector.Error as err:
+            messagebox.showerror("Error", f"Error al conectar con la base de datos: {err}")
+
 
             if usuario:
                 self.txId.delete(0, tk.END)
@@ -356,5 +376,4 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = Login(root)
     root.mainloop()
-
 
