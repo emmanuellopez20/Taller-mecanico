@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import mysql.connector
 import conexion as con
-import usuario as user
+import usuario as user  
 
 class dbUsuario:
 
@@ -28,7 +28,7 @@ class dbUsuario:
         try:
             self.con = con.conexion()
             self.conn = self.con.open()
-            self.cursor1 = self.conn.cursor()
+            self.cursor1 = self.conn.cursor(buffered=True)
             aux = None
             self.sql = "SELECT * FROM usuarios WHERE usuario_id = {}".format(usuario.getUsuario_id())
             self.cursor1.execute(self.sql)
@@ -81,7 +81,7 @@ class dbUsuario:
         try:
             self.con = con.conexion()
             self.conn = self.con.open()
-            self.cursor1 = self.conn.cursor()
+            self.cursor1 = self.conn.cursor(buffered=True)
             aux = None
             self.sql = "SELECT * FROM usuarios WHERE username = '{}'".format(usuario.getUsername())
             self.cursor1.execute(self.sql)
