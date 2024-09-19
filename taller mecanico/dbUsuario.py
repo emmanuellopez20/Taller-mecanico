@@ -66,7 +66,7 @@ class dbUsuario:
         self.con.close()
 
     def getMaxId(self):
-        self.con = con.conexion()
+        self.con = con.Conexion()
         self.conn = self.con.open()
         self.cursor1 = self.conn.cursor()
         self.sql = "SELECT MAX(usuario_id) FROM usuarios"
@@ -75,6 +75,7 @@ class dbUsuario:
         self.conn.commit()
         self.con.close()
         return row[0] if row[0] is not None else 1
+
 
     def Auntenticar(self, usuario):
         try:
