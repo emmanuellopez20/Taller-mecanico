@@ -1,6 +1,6 @@
 import mysql.connector
 
-class conexion:
+class Conexion:
     def __init__(self):
         self.user = "root"
         self.password = ""
@@ -26,3 +26,5 @@ class conexion:
         if self.conn.is_connected():
             self.conn.close()
             print("Conexión cerrada")
+
+
