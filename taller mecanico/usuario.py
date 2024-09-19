@@ -35,3 +35,4 @@ class Usuario:
 
     def setPerfil(self, perfil):
         self.perfil = perfil
+
