@@ -243,6 +243,7 @@ class UserCRUD:
 
                 self.btEditar.config(state=tk.NORMAL)
                 self.btCancelar.config(state=tk.NORMAL)
+                self.btEliminar.config(state=tk.NORMAL)
             else:
                 messagebox.showerror("Error", "Usuario no encontrado")
         except mysql.connector.Error as err:
@@ -340,7 +341,7 @@ class UserCRUD:
             db_con = con.Conexion()
             conn = db_con.open()
             cursor = conn.cursor()
-            cursor.execute("DELETE FROM usuarios WHERE id=%s", (id_usuario,))
+            cursor.execute("DELETE FROM usuarios WHERE usuario_id=%s", (id_usuario,))
             conn.commit()
             db_con.close()
             messagebox.showinfo("Información", "Usuario eliminado exitosamente")
@@ -352,12 +353,11 @@ class UserCRUD:
             self.txPassword.delete(0, tk.END)
             self.txPerfil.set("")
 
-            # Deshabilitar botones
+        # Deshabilitar botones
             self.btEliminar.config(state=tk.DISABLED)
             self.btCancelar.config(state=tk.DISABLED)
         except mysql.connector.Error as err:
             messagebox.showerror("Error", f"Error al conectar con la base de datos: {err}")
-
     def cancelar(self):
         # Limpiar campos de entrada
         self.txId.delete(0, tk.END)
@@ -376,4 +376,5 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = Login(root)
     root.mainloop()
+
 
