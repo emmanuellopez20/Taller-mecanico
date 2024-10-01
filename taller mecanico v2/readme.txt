@@ -1,3 +1,12 @@
+CREATE TABLE IF NOT EXISTS usuarios (
+    usuario_id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    perfil VARCHAR(50) NOT NULL
+);
+
+
 CREATE TABLE IF NOT EXISTS clientes (
     cliente_id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -6,14 +15,6 @@ CREATE TABLE IF NOT EXISTS clientes (
     FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id)
 );
 
-
-CREATE TABLE IF NOT EXISTS usuarios (
-    usuario_id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(100) NOT NULL,
-    perfil VARCHAR(50) NOT NULL
-);
 
 CREATE TABLE IF NOT EXISTS vehiculos (
     matricula VARCHAR(20) PRIMARY KEY,
